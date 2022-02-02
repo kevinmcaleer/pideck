@@ -28,6 +28,7 @@ from adafruit_hid.consumer_control import ConsumerControl
 from adafruit_hid.consumer_control_code import ConsumerControlCode
 
 from digitalio import DigitalInOut, Direction, Pull
+import qd_yaml
 
 cs = DigitalInOut(board.GP17)
 cs.direction = Direction.OUTPUT
@@ -39,6 +40,15 @@ device = I2CDevice(i2c, 0x20)
 kbd = Keyboard(usb_hid.devices)
 layout = KeyboardLayoutUS(kbd)
 
+CONFIG_FILE = 'keypad.yml'
+
+def load_configuration():
+    """ Read in the YAML configuration file, and returns the config as a list """
+    with open(CONFIG_FILE) as file:
+        config = qd_yaml.YAML.load(file)
+
+    return config
+        
 
 def colourwheel(pos):
     "Change the colour based on the current RGB value"
@@ -69,11 +79,31 @@ def read_button_states(x, y):
                 pressed[i] = 0
     return pressed
 
+def convert_hex_to_rgb(value):
+    value = value.lstrip('#')
+    lv = len(value)
+    return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+
+
 # held is set of the button is held down, for debouncing
 held = [0] * 16
 
+def set_keycolours(config):
+    for key in config:
+        pixels[key] = convert_hex_to_rgb(key.off)
+
 while True:
+    # load the config and set the key colours
+    config = load_configuration()
+
+    set_keycolours(config=config)
+
+    # check the button press state
     pressed = read_button_states(0, 16)
+
+    for keys in config:
+        if pressed[keys]:
+            pixels[keys] = keys['']
 
     if pressed[0]:
         pixels[0] = colourwheel(0 * 16)  # Map pixel index to 0-255 range
@@ -81,7 +111,7 @@ while True:
         if not held[0]:
             layout.write("volu")
             kbd.send(Keycode.ENTER)
-            #held[0] = 1
+            held[0] = 1
 
     elif pressed[1]:
         pixels[1] = colourwheel(1 * 16)  # Map pixel index to 0-255 range
@@ -91,117 +121,7 @@ while True:
             kbd.send(Keycode.ENTER)
             held[1] = 1
 
-    elif pressed[2]:
-        pixels[2] = colourwheel(2 * 16)  # Map pixel index to 0-255 range
-
-        if not held[2]:
-            layout.write("rad4")
-            kbd.send(Keycode.ENTER)
-            held[2] = 1
-
-    elif pressed[3]:
-        pixels[3] = colourwheel(3 * 16)  # Map pixel index to 0-255 range
-
-        if not held[3]:
-            layout.write("mpc next")
-            kbd.send(Keycode.ENTER)
-            held[3] = 1
-
-    elif pressed[4]:
-        pixels[4] = colourwheel(4 * 16)  # Map pixel index to 0-255 range
-
-        if not held[4]:
-            layout.write("vold")
-            kbd.send(Keycode.ENTER)
-            #held[4] = 1
-            
-    elif pressed[5]:
-        pixels[5] = colourwheel(5 * 16)  # Map pixel index to 0-255 range
-
-        if not held[5]:
-            layout.write("mpc prev")
-            kbd.send(Keycode.ENTER)
-            held[5] = 1
-
-    elif pressed[6]:
-        pixels[6] = colourwheel(6 * 16)  # Map pixel index to 0-255 range
-
-        if not held[6]:
-            layout.write("rad3")
-            kbd.send(Keycode.ENTER)
-            held[6] = 1
     
-    elif pressed[7]:
-        pixels[7] = colourwheel(7 * 16)  # Map pixel index to 0-255 range
-
-        if not held[7]:
-            layout.write("mpc prev")
-            kbd.send(Keycode.ENTER)
-            held[7] = 1
-
-    elif pressed[8]:
-        pixels[8] = colourwheel(8 * 16)  # Map pixel index to 0-255 range
-
-        if not held[8]:
-            layout.write("toggle_disp1")
-            kbd.send(Keycode.ENTER)
-            held[8] = 1
-            
-    elif pressed[9]:
-        pixels[9] = colourwheel(9 * 16)  # Map pixel index to 0-255 range
-
-        if not held[9]:
-            layout.write("mpc stop")
-            kbd.send(Keycode.ENTER)
-            held[9] = 1
-
-    elif pressed[10]:
-        pixels[10] = colourwheel(10 * 16)  # Map pixel index to 0-255 range
-
-        if not held[10]:
-            layout.write("rad2")
-            kbd.send(Keycode.ENTER)
-            held[10] = 1
-            
-    elif pressed[11]:
-        pixels[11] = colourwheel(11 * 16)  # Map pixel index to 0-255 range
-
-        if not held[11]:
-            layout.write("mpc stop")
-            kbd.send(Keycode.ENTER)
-            held[11] = 1
-
-    elif pressed[12]:
-        pixels[12] = colourwheel(12 * 16)  # Map pixel index to 0-255 range
-
-        if not held[12]:
-            layout.write("ssh pi\"192.168.9.97 picade_switch")
-            kbd.send(Keycode.ENTER)
-            held[12] = 1
-            
-    elif pressed[13]:
-        pixels[13] = colourwheel(13 * 16)  # Map pixel index to 0-255 range
-
-        if not held[13]:
-            layout.write("mpc toggle")
-            kbd.send(Keycode.ENTER)
-            held[13] = 1
-
-    elif pressed[14]:
-        pixels[14] = colourwheel(14 * 16)  # Map pixel index to 0-255 range
-
-        if not held[14]:
-            layout.write("rad1")
-            kbd.send(Keycode.ENTER)
-            held[14] = 1
-            
-    elif pressed[15]:
-        pixels[15] = colourwheel(15 * 16)  # Map pixel index to 0-255 range
-
-        if not held[15]:
-            layout.write("mpc toggle")
-            kbd.send(Keycode.ENTER)
-            held[15] = 1
     
     else:  # Released state
         for i in range(16):
