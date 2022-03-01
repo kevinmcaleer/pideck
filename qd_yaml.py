@@ -70,8 +70,8 @@ class YAML():
             # count indentation level 
             current_level = self.count_indentation(line)
             if current_level == level and YAML.is_block(line) and node > 0:
-#                 print (f"yes, {line}")
-                print (f"about to append block_list, which is: {block_list}")
+                print (f"line: {line}, block_list: {block_list}")
+#                 print (f"about to append block_list, which is: {block_list}")
                 self.list.append(block_list)
                 block_list = []
                 
@@ -84,14 +84,14 @@ class YAML():
                 # just the first node
                 if node == 0:
                     new_line = YAML.split_mapping(line)
-#                     block_list.append(new_line)
+                    block_list.append(new_line)
                     node += 1
 #                     self.list.append(block_list)
                 else:
                     if YAML.is_mapping(line):
                         # split string at mapping and remove whitespace
                         new_line = YAML.split_mapping(line)
-                block_list.append(new_line)
+                        block_list.append(new_line)
 #                 self.list.append(block_list)
                 
  

@@ -111,29 +111,41 @@ config = load_configuration()
 
 set_keycolours(config=config)
 
+keys = []
+for index in range(len(config)):
+    key = dict(sum(map(list, map(dict.items, config[index])), []))
+    key_no = int(key['name'])
+    myKey = Key()
+    myKey.command = key['command']
+    myKey.name = key['name']
+    myKey.on = key['on']
+    myKey.off = key['off']
+    myKey.effect = key['effect']
+    keys[index] = myKey
+
 while True:
     # check the button press state
     pressed = read_button_states(0, 16)
     
-    for key in config:
-        
-        key = dict(sum(map(list, map(dict.items, key)), []))
-        key_no = int(key['name'])
-        myKey = Key()
-        myKey.command = key['command']
+#     for key in config:
+    for key_no in range(16):
+#         key = dict(sum(map(list, map(dict.items, key)), []))
+#         key_no = int(key['name'])
+#         myKey = Key()
+#         myKey.command = key['command']
         if pressed[key_no]:
             print(f"key pressed {key_no}")
             pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
             
             # send the command
-            myKey.send(kbd)
+            keys[key_no].send(kbd)
             print(f"key sent {myKey.command}")
 #             layout.write(key["command"])
 #             kbd.send(Keycode.ENTER)print(held[key_no])
             if not held[key_no]:
                 held[key_no] = True
         else:
-            pixels[int(key["name"])] = convert_hex_to_rgb(key["off"])
+            pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
             
      # Released state
     time.sleep(0.05) # Debounce
