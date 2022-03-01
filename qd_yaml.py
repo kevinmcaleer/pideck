@@ -69,15 +69,17 @@ class YAML():
         for line in file:
             # count indentation level 
             current_level = self.count_indentation(line)
+#             print(f"current_level: {current_level}, is_block: {YAML.is_block(line)}, node: {node}")
             if current_level == level and YAML.is_block(line) and node > 0:
-                print (f"line: {line}, block_list: {block_list}")
+#                 print (f"line: {line}, block_list: {block_list}")
 #                 print (f"about to append block_list, which is: {block_list}")
                 self.list.append(block_list)
                 block_list = []
-                
+#                 print(f"list: {self.list}, block_list: {block_list}")
                 new_line = YAML.split_mapping(line)
                 block_list.append(new_line)
-                self.list.append(block_list)
+#                 print(f"block_list: {block_list}")
+#                 self.list.append(block_list)
 #                 block_list = []
                 level = self.count_indentation(line)
             else:
@@ -87,16 +89,20 @@ class YAML():
                     block_list.append(new_line)
                     node += 1
 #                     self.list.append(block_list)
+#                     print("node is 0")
                 else:
                     if YAML.is_mapping(line):
                         # split string at mapping and remove whitespace
                         new_line = YAML.split_mapping(line)
                         block_list.append(new_line)
+#                         print(f"block_list: {block_list}")
+                    node += 1
 #                 self.list.append(block_list)
                 
  
 #         self.list = block_list
-        print(f"self_list: {self.list}")
+        self.list.append(block_list)
+#         print(f"self_list: {self.list}")
         return self.list
 
     def pretty_print(self):

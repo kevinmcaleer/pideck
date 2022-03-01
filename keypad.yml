@@ -1,8 +1,8 @@
 - name: 0
-   off: FFAEBC
+   off: FFFFFF
    on: B4F8C8
    effect: none
-   command: CONTROL SHIFT K
+   command: COMMAND S
 - name: 1
    off: FFFFFF
    on: 00FF00
@@ -12,7 +12,7 @@
    off: 0000FF
    on: FFFFFF
    effect: pulse
-   command: W
+   command: OPTION COMMAND [
 - name: 3
    off: FFFFFF
    on: FF0000

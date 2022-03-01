@@ -96,10 +96,10 @@ def set_keycolours(config):
 
     for key in config:
         key = dict(sum(map(list, map(dict.items, key)), []))
-        print(f"new key {key}")
+#         print(f"new key {key}")
 #         for item in key:
-        print (f"key name: {key['name']}")
-        print(f'convert_hex_to_rgb(key["off"]) {convert_hex_to_rgb(key["off"])}')
+#         print (f"key name: {key['name']}")
+#         print(f'convert_hex_to_rgb(key["off"]) {convert_hex_to_rgb(key["off"])}')
         pixels[int(key["name"])] = convert_hex_to_rgb(key["off"])
 
 def key_on(config, key):
@@ -112,7 +112,10 @@ config = load_configuration()
 set_keycolours(config=config)
 
 keys = []
-for index in range(len(config)):
+item_len = len(config)
+print(f"item_len {item_len}")
+for index in range(item_len):
+    print(f"index: {index}")
     key = dict(sum(map(list, map(dict.items, config[index])), []))
     key_no = int(key['name'])
     myKey = Key()
@@ -121,7 +124,8 @@ for index in range(len(config)):
     myKey.on = key['on']
     myKey.off = key['off']
     myKey.effect = key['effect']
-    keys[index] = myKey
+    keys.insert(index, myKey)
+print(f"keys: {keys}")
 
 while True:
     # check the button press state
@@ -139,7 +143,7 @@ while True:
             
             # send the command
             keys[key_no].send(kbd)
-            print(f"key sent {myKey.command}")
+            print(f"key sent {keys[key_no].command}")
 #             layout.write(key["command"])
 #             kbd.send(Keycode.ENTER)print(held[key_no])
             if not held[key_no]:

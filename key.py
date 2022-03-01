@@ -48,8 +48,8 @@ class Key():
                 print("press shift")
                 keyb.press(Keycode.SHIFT)
             elif command in ["OPTION", "ALT"]:
-                print("press alt")
-                keyb.press(Keycode.ALT)
+                print("press option")
+                keyb.press(Keycode.OPTION)
             elif command in ["COMMAND"]:
                 print("press command")
                 keyb.press(Keycode.COMMAND)
@@ -125,8 +125,11 @@ class Key():
                 keyb.press(Keycode.KEYPAD_NINE)
             elif command in ["0"]:
                 keyb.press(Keycode.KEYPAD_ZERO)
+            elif command in ["[","{"]:
+                keyb.press(Keycode.LEFT_BRACKET)
+            elif command in ["]","}"]:
+                keyb.press(Keycode.RIGHT_BRACKET)
             elif command in ["TAB"]:
-                print("press TAB")
                 keyb.press(Keycode.TAB)
 #                     
 #         sleep(0.10)
