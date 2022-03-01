@@ -219,6 +219,10 @@ class Key():
                 keyb.press(Keycode.RIGHT_BRACKET)
             elif command in ["TAB"]:
                 keyb.press(Keycode.TAB)
+            elif command in ["MINUS"]:
+                keyb.press(Keycode.KEYPAD_MINUS)
+            elif command in ["PLUS"]:
+                keyb.press(Keycode.KEYPAD_PLUS)
 #                     
 #         sleep(0.10)
         keyb.release_all()

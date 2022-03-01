@@ -8,7 +8,6 @@ Purpose: Read in a YAML configuration file, which lists:
 - The Key Off colour and brightness
 - The 'command' to run: its just a text string to send
 
-
 Maybe also add some pulsing effects too
 """
 
@@ -31,6 +30,8 @@ from digitalio import DigitalInOut, Direction, Pull
 
 import qd_yaml
 from key import Key, convert_hex_to_rgb, convert_rgb_to_hex
+
+VERSION = 1.0
 
 cs = DigitalInOut(board.GP17)
 cs.direction = Direction.OUTPUT
@@ -122,6 +123,8 @@ for index in range(item_len):
     myKey.button_type = key['button_type']
     keys.insert(index, myKey)
 # print(f"keys: {keys}")
+
+print(f"PiDeck Version {VERSION}")
 
 while True:
     # check the button press state
