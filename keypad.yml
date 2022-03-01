@@ -3,78 +3,94 @@
    on: B4F8C8
    effect: none
    command: COMMAND S
+   button_type: press
 - name: 1
-   off: FFFFFF
+   off: FFFF00
    on: 00FF00
    effect: pulse
    command: COMMAND TAB
+   button_type: toggle
 - name: 2
    off: 0000FF
    on: FFFFFF
    effect: pulse
    command: OPTION COMMAND [
+   button_type: press
 - name: 3
    off: FFFFFF
    on: FF0000
    effect: none
    command: COMMAND SHIFT K
+   button_type: press
 - name: 4
    off: FF0000
    on: FFFFFF
    effect: none
    command: R
+   button_type: press
 - name: 5
    off: FF0000
    on: FFFFFF
    effect: none
    command: T
+   button_type: press
 - name: 6
    off: FF0000
    on: FFFFFF
    effect: none
    command: Y
+   button_type: press
 - name: 7
    off: FF0000
    on: FFFFFF
    effect: none
    command: U
+   button_type: press
 - name: 8
    off: FF0000
    on: FFFFFF
    effect: none
    command: I
+   button_type: press
 - name: 9
    off: FF0000
    on: FFFFFF
    effect: none
    command: O
+   button_type: press
 - name: 10
    off: FF0000
    on: FFFFFF
    effect: none
    command: P
+   button_type: press
 - name: 11
    off: FF0000
    on: FFFFFF
    effect: none
    command: F
+   button_type: press
 - name: 12
    off: FF0000
    on: FFFFFF
    effect: none
-   command: G
+   command: 
+   button_type: press
 - name: 13
    off: FF0000
    on: FFFFFF
    effect: none
    command: H
+   button_type: press
 - name: 14
    off: FF0000
    on: FFFFFF
    effect: none
    command: J
+   button_type: press
 - name: 15
    off: FFFFFF
    on: 00FF00
    effect: none
    command: K
+   button_type: press

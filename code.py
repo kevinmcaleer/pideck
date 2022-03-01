@@ -30,7 +30,7 @@ from adafruit_hid.consumer_control_code import ConsumerControlCode
 from digitalio import DigitalInOut, Direction, Pull
 
 import qd_yaml
-from key import Key
+from key import Key, convert_hex_to_rgb, convert_rgb_to_hex
 
 cs = DigitalInOut(board.GP17)
 cs.direction = Direction.OUTPUT
@@ -82,11 +82,6 @@ def read_button_states(x, y):
                 pressed[i] = 0
     return pressed
 
-def convert_hex_to_rgb(value):
-    value = value.lstrip('#')
-    lv = len(value)
-    return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
-
 
 # held is set of the button is held down, for debouncing
 held = [0] * 16
@@ -105,7 +100,7 @@ def set_keycolours(config):
 def key_on(config, key):
     pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
 
-
+    
     # load the config and set the key colours
 config = load_configuration()
 
@@ -113,9 +108,9 @@ set_keycolours(config=config)
 
 keys = []
 item_len = len(config)
-print(f"item_len {item_len}")
+# print(f"item_len {item_len}")
 for index in range(item_len):
-    print(f"index: {index}")
+#     print(f"index: {index}")
     key = dict(sum(map(list, map(dict.items, config[index])), []))
     key_no = int(key['name'])
     myKey = Key()
@@ -124,8 +119,9 @@ for index in range(item_len):
     myKey.on = key['on']
     myKey.off = key['off']
     myKey.effect = key['effect']
+    myKey.button_type = key['button_type']
     keys.insert(index, myKey)
-print(f"keys: {keys}")
+# print(f"keys: {keys}")
 
 while True:
     # check the button press state
@@ -138,8 +134,20 @@ while True:
 #         myKey = Key()
 #         myKey.command = key['command']
         if pressed[key_no]:
-            print(f"key pressed {key_no}")
-            pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
+#             print(f"key pressed {key_no}")
+
+            if keys[key_no].effect == "pulse":
+                color = keys[key_no].pulse_tick()
+                pixels[key_no] = convert_hex_to_rgb(color)
+            if keys[key_no].button_type == "toggle":
+                keys[key_no].toggle
+                
+                if keys[key_no].toggle:
+                    pixels[key_no] = convert_hex_to_rgb(keys[key_no].on)
+                else:
+                    pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
+            else:            
+                pixels[key_no] = convert_hex_to_rgb(keys[key_no].on)
             
             # send the command
             keys[key_no].send(kbd)
@@ -149,9 +157,14 @@ while True:
             if not held[key_no]:
                 held[key_no] = True
         else:
-            pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
-            
+            if not keys[key_no].button_type in ["press","toggle"]:
+                pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
+        if keys[key_no].effect == "pulse":
+            color = keys[key_no].pulse_tick()
+#             print(f"color: {color}")
+            pixels[key_no] = convert_hex_to_rgb(color)
      # Released state
+    
     time.sleep(0.05) # Debounce
     for i in range(16):
         held[i] = False  # Set held states to off
