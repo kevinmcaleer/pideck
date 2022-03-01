@@ -44,8 +44,9 @@ CONFIG_FILE = 'keypad.yml'
 
 def load_configuration():
     """ Read in the YAML configuration file, and returns the config as a list """
+    yml = qd_yaml.YAML()
     with open(CONFIG_FILE) as file:
-        config = qd_yaml.YAML.load(file)
+        config = yml.load(file)
 
     return config
         
@@ -89,42 +90,44 @@ def convert_hex_to_rgb(value):
 held = [0] * 16
 
 def set_keycolours(config):
+#     print(f'config is: {config}')
+
     for key in config:
-        pixels[key] = convert_hex_to_rgb(key.off)
+        key = dict(sum(map(list, map(dict.items, key)), []))
+        print(f"new key {key}")
+#         for item in key:
+        print (f"key name: {key['name']}")
+        print(f'convert_hex_to_rgb(key["off"]) {convert_hex_to_rgb(key["off"])}')
+        pixels[int(key["name"])] = convert_hex_to_rgb(key["off"])
 
-while True:
+def key_on(config, key):
+    pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
+
+
     # load the config and set the key colours
-    config = load_configuration()
+config = load_configuration()
 
-    set_keycolours(config=config)
-
+set_keycolours(config=config)
+while True:
     # check the button press state
     pressed = read_button_states(0, 16)
-
-    for keys in config:
-        if pressed[keys]:
-            pixels[keys] = keys['']
-
-    if pressed[0]:
-        pixels[0] = colourwheel(0 * 16)  # Map pixel index to 0-255 range
-
-        if not held[0]:
-            layout.write("volu")
-            kbd.send(Keycode.ENTER)
-            held[0] = 1
-
-    elif pressed[1]:
-        pixels[1] = colourwheel(1 * 16)  # Map pixel index to 0-255 range
-
-        if not held[1]:
-            layout.write("mpc next")
-            kbd.send(Keycode.ENTER)
-            held[1] = 1
-
     
-    
+    for key in config:
+        key = dict(sum(map(list, map(dict.items, key)), []))
+        key_no = int(key['name'])
+        if pressed[key_no]:
+            print(f"key pressed {key_no}")
+            pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
+            
+            # send the command
+            layout.write(key["command"])
+            kbd.send(Keycode.ENTER)
+        else:
+            pixels[int(key["name"])] = convert_hex_to_rgb(key["off"])
+        if not held[key_no]:
+            held[key_no] = 1
+        
     else:  # Released state
         for i in range(16):
-            pixels[i] = (0, 0, 0) # Turn pixels off
             held[i] = 0  # Set held states to off
         time.sleep(0.1) # Debounce

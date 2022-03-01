@@ -41,7 +41,7 @@ class YAML():
         value = mapping[1].strip()
         new_list = {key: value}
         
-        print('new_list is:',new_list)
+        #print('new_list is:',new_list)
         return new_list
 
     @staticmethod
@@ -64,33 +64,39 @@ class YAML():
         """ loads the file and returns a list """
         within_block = False 
         block_list = []
-        level = 0
+        level = 0 
         node = 0
         for line in file:
             # count indentation level 
             current_level = self.count_indentation(line)
             if current_level == level and YAML.is_block(line) and node > 0:
+#                 print (f"yes, {line}")
+                print (f"about to append block_list, which is: {block_list}")
                 self.list.append(block_list)
                 block_list = []
                 
                 new_line = YAML.split_mapping(line)
                 block_list.append(new_line)
                 self.list.append(block_list)
-                block_list = []
+#                 block_list = []
                 level = self.count_indentation(line)
             else:
                 # just the first node
                 if node == 0:
                     new_line = YAML.split_mapping(line)
-                    block_list.append(new_line)
+#                     block_list.append(new_line)
                     node += 1
+#                     self.list.append(block_list)
                 else:
                     if YAML.is_mapping(line):
                         # split string at mapping and remove whitespace
                         new_line = YAML.split_mapping(line)
-                        block_list.append(new_line)
-                        # self.list.append(new_line)
+                block_list.append(new_line)
+#                 self.list.append(block_list)
+                
  
+#         self.list = block_list
+        print(f"self_list: {self.list}")
         return self.list
 
     def pretty_print(self):

@@ -1,20 +1,80 @@
-- name: key01
+- name: 0
    off: FFAEBC
    on: B4F8C8
    effect: none
-   command: "A"
-- name: key02
-   off: FBE7C6
+   command: CTRL + A
+- name: 1
+   off: FFFFFF
+   on: 00FF00
+   effect: pulse
+   command: D
+- name: 2
+   off: 0000FF
    on: FFFFFF
    effect: pulse
-   command: "D"
-- name: key03
-   off: FBE7C6
-   on: FFFFFF
-   effect: pulse
-   command: "W"
-- name: key04
-   off: FBE7C6
+   command: W
+- name: 3
+   off: FF0000
    on: FFFFFF
    effect: none
-   command: "S"
+   command: S
+- name: 4
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: R
+- name: 5
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: T
+- name: 6
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: Y
+- name: 7
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: U
+- name: 8
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: I
+- name: 9
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: O
+- name: 10
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: P
+- name: 11
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: F
+- name: 12
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: G
+- name: 13
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: H
+- name: 14
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: J
+- name: 15
+   off: FF0000
+   on: FFFFFF
+   effect: none
+   command: K
