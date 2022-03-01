@@ -2,22 +2,22 @@
    off: FFAEBC
    on: B4F8C8
    effect: none
-   command: CTRL + A
+   command: CONTROL SHIFT K
 - name: 1
    off: FFFFFF
    on: 00FF00
    effect: pulse
-   command: D
+   command: COMMAND TAB
 - name: 2
    off: 0000FF
    on: FFFFFF
    effect: pulse
    command: W
 - name: 3
-   off: FF0000
-   on: FFFFFF
+   off: FFFFFF
+   on: FF0000
    effect: none
-   command: S
+   command: COMMAND SHIFT K
 - name: 4
    off: FF0000
    on: FFFFFF
@@ -74,7 +74,7 @@
    effect: none
    command: J
 - name: 15
-   off: FF0000
-   on: FFFFFF
+   off: FFFFFF
+   on: 00FF00
    effect: none
    command: K

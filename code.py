@@ -28,7 +28,9 @@ from adafruit_hid.consumer_control import ConsumerControl
 from adafruit_hid.consumer_control_code import ConsumerControlCode
 
 from digitalio import DigitalInOut, Direction, Pull
+
 import qd_yaml
+from key import Key
 
 cs = DigitalInOut(board.GP17)
 cs.direction = Direction.OUTPUT
@@ -108,26 +110,32 @@ def key_on(config, key):
 config = load_configuration()
 
 set_keycolours(config=config)
+
 while True:
     # check the button press state
     pressed = read_button_states(0, 16)
     
     for key in config:
+        
         key = dict(sum(map(list, map(dict.items, key)), []))
         key_no = int(key['name'])
+        myKey = Key()
+        myKey.command = key['command']
         if pressed[key_no]:
             print(f"key pressed {key_no}")
             pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
             
             # send the command
-            layout.write(key["command"])
-            kbd.send(Keycode.ENTER)
+            myKey.send(kbd)
+            print(f"key sent {myKey.command}")
+#             layout.write(key["command"])
+#             kbd.send(Keycode.ENTER)print(held[key_no])
+            if not held[key_no]:
+                held[key_no] = True
         else:
             pixels[int(key["name"])] = convert_hex_to_rgb(key["off"])
-        if not held[key_no]:
-            held[key_no] = 1
-        
-    else:  # Released state
-        for i in range(16):
-            held[i] = 0  # Set held states to off
-        time.sleep(0.1) # Debounce
+            
+     # Released state
+    time.sleep(0.05) # Debounce
+    for i in range(16):
+        held[i] = False  # Set held states to off
