@@ -92,5 +92,5 @@
    off: 2C56B1
    on: FFFFFF
    effect: none
-   command: OPTION COMMAND PLUS
+   command: OPTION COMMAND EQUALS
    button_type: press

@@ -223,6 +223,8 @@ class Key():
                 keyb.press(Keycode.KEYPAD_MINUS)
             elif command in ["PLUS"]:
                 keyb.press(Keycode.KEYPAD_PLUS)
+            elif command in ["EQUALS"]:
+                keyb.press(Keycode.EQUALS)
 #                     
 #         sleep(0.10)
         keyb.release_all()
