@@ -29,35 +29,37 @@
    button_type: press
 - name: 4
    # Launch PowerPoint
-   off: BF5739
-   on: FFFFFF
-   effect: none
+   off: 550000
+   on: BF5739
+   effect: pulse
    command: OPTION COMMAND MINUS
    button_type: press
 - name: 5
-   off: 000000
-   on: FF0000
+   off: FFFFFF
+   on: FFFF00
    effect: none
-   command: T
+   command: H E L L O
    button_type: press
 - name: 6
-   off: FFFFFF
+   # not assigned
+   off: 000000
    on: FF0000
    effect: none
    command: Y
    button_type: press
 - name: 7
-   off: 000000
-   on: FF0000
-   effect: none
-   command: I
+   # Right Arrow
+   off: 555500
+   on: FFFF00
+   effect: pulse
+   command: RIGHT_ARROW
    button_type: press
 - name: 8
-   # Launch Excel
-   off: 00B700
-   on: 000000
-   effect: none
-   command:  OPTION COMMAND ]
+   # Launch Word
+   off: 000055
+   on: 0000FF
+   effect: pulse
+   command: OPTION COMMAND EQUALS
    button_type: press
 - name: 9
    off: 000000
@@ -66,40 +68,44 @@
    command: O
    button_type: press
 - name: 10
-   off: 000000
-   on: FF0000
+   # Up Arrow
+   off: FFFF00
+   on: 555500
    effect: none
-   command: P
+   command: UP_ARROW
    button_type: press
 - name: 11
-   off: 000000
-   on: FF0000
+   # Down Arrow
+   off: FFFF00
+   on: 555500
    effect: none
-   command: Q
+   command: DOWN_ARROW
    button_type: press
 - name: 12
-   # Launch Word
-   off: 2C56B1
-   on: FFFFFF
-   effect: none
-   command: OPTION COMMAND EQUALS
+   # Launch Excel
+   off: 005500
+   on: 00FF00
+   effect: pulse
+   command: OPTION COMMAND ]
    button_type: press
 - name: 13
+   # Screen Capture
    off: 000000
    on: FF0000
    effect: none
-   command: H
+   command: SHIFT COMMAND 3
    button_type: press
 - name: 14
+   # not assigned
    off: 000000
    on: FF0000
    effect: none
    command: J
    button_type: press
 - name: 15
-   # not assigned
-   off: 000000
-   on: FFFFFF
+   # Left Arrow
+   off: FFFF00
+   on: 555500
    effect: none
-   command: a
+   command: LEFT_ARROW
    button_type: press

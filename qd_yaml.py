@@ -25,8 +25,12 @@ class YAML():
             return False
         
     def is_comment(self, text):
-        l = text.lstrip()
-        if "#" in l[0]:
+        """ checks if the lien is a comment """
+        if text.lstrip() is not "":
+            l = text.lstrip()
+            if "#" in l[0]:
+                return True
+        else:
             return True
 
     def is_scalar(self, text):
@@ -56,6 +60,16 @@ class YAML():
             return False
     
     @staticmethod
+    def is_empty(text:str):
+        """ Checks is the line is empty """ 
+        
+        line_str = text.replace(" ","")
+        if line_str == "":
+            return True
+        else:
+            return False
+    
+    @staticmethod
     def count_indentation(text):
         """ Counts the number of spaces at the start of the line """
         leading_spaces = len(text) - len(text.lstrip())
@@ -69,7 +83,9 @@ class YAML():
         node = 0
         for line in file:
             # Check if comment line
-            if self.is_comment(line):
+            if self.is_comment(line) or self.is_empty(line):
+                
+                # Its a comment or an empty line
                 pass
             else:
                 # count indentation level 

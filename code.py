@@ -88,21 +88,17 @@ def read_button_states(x, y):
 held = [0] * 16
 
 def set_keycolours(config):
-#     print(f'config is: {config}')
+#     """ Set the colours based on the yaml file configuration """
 
     for key in config:
         key = dict(sum(map(list, map(dict.items, key)), []))
-#         print(f"new key {key}")
-#         for item in key:
-#         print (f"key name: {key['name']}")
-#         print(f'convert_hex_to_rgb(key["off"]) {convert_hex_to_rgb(key["off"])}')
         pixels[int(key["name"])] = convert_hex_to_rgb(key["off"])
 
 def key_on(config, key):
     pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
 
     
-    # load the config and set the key colours
+# load the config and set the key colours
 config = load_configuration()
 
 set_keycolours(config=config)

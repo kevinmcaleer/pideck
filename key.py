@@ -248,6 +248,17 @@ class Key():
                 keyb.press(Keycode.KEYPAD_PLUS)
             elif command in ["EQUALS"]:
                 keyb.press(Keycode.EQUALS)
-
+            elif command in ["ECSCAPE"]:
+                keyb.press(Keycode.ESCAPE)
+            elif command in ["SPACE"]:
+                keyb.press(Keycode.SPACE)
+            elif command in ["LEFT_ARROW"]:
+                keyb.press(Keycode.LEFT_ARROW)
+            elif command in ["RIGHT_ARROW"]:
+                keyb.press(Keycode.RIGHT_ARROW)
+            elif command in ["UP_ARROW"]:
+                keyb.press(Keycode.UP_ARROW)
+            elif command in ["DOWN_ARROW"]:
+                keyb.press(Keycode.DOWN_ARROW)
         keyb.release_all()
 
