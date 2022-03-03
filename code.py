@@ -130,14 +130,10 @@ while True:
     # check the button press state
     pressed = read_button_states(0, 16)
     
-#     for key in config:
+
     for key_no in range(16):
-#         key = dict(sum(map(list, map(dict.items, key)), []))
-#         key_no = int(key['name'])
-#         myKey = Key()
-#         myKey.command = key['command']
+
         if pressed[key_no]:
-#             print(f"key pressed {key_no}")
 
             if keys[key_no].effect == "pulse":
                 color = keys[key_no].pulse_tick()
@@ -155,19 +151,27 @@ while True:
             # send the command
             keys[key_no].send(kbd)
             print(f"key sent {keys[key_no].command}")
-#             layout.write(key["command"])
-#             kbd.send(Keycode.ENTER)print(held[key_no])
+
             if not held[key_no]:
                 held[key_no] = True
         else:
+            # Need to tidy up the condition below
+            if keys[key_no].effect == "none":
+                pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
             if not keys[key_no].button_type in ["press","toggle"]:
                 pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
+        
+        # Pulse effect if switched on
         if keys[key_no].effect == "pulse":
             color = keys[key_no].pulse_tick()
-#             print(f"color: {color}")
             pixels[key_no] = convert_hex_to_rgb(color)
-     # Released state
-    
+            
+        # Flash effect if switched on
+        if keys[key_no].effect == "flash":
+            color = keys[key_no].flash_tick()
+            pixels[key_no] = convert_hex_to_rgb(color)
+         
+    # Released state
     time.sleep(0.05) # Debounce
     for i in range(16):
         held[i] = False  # Set held states to off

@@ -1,35 +1,41 @@
+# Keypad YAML File
 - name: 0
-   off: FFFFFF
+   # Save Shortcut
+   off: 000000
    on: B4F8C8
    effect: none
    command: COMMAND S
    button_type: press
 - name: 1
+   # Switch Apps
    off: FFFF00
    on: 00FF00
    effect: pulse
    command: COMMAND TAB
    button_type: toggle
 - name: 2
+   # Launch Keynote
    off: FFFFFF
    on: 0000FF
    effect: pulse
    command: OPTION COMMAND [
    button_type: press
 - name: 3
-   off: FF0000
-   on: FFFFFF
-   effect: none
+   # Clear console
+   off: 000000
+   on: FF0000
+   effect: flash
    command: COMMAND SHIFT K
    button_type: press
 - name: 4
-   off: FFFFFF
-   on: FF0000
+   # Launch PowerPoint
+   off: BF5739
+   on: FFFFFF
    effect: none
-   command: R
+   command: OPTION COMMAND MINUS
    button_type: press
 - name: 5
-   off: FFFFFF
+   off: 000000
    on: FF0000
    effect: none
    command: T
@@ -41,56 +47,59 @@
    command: Y
    button_type: press
 - name: 7
-   off: 00B700
-   on: FFFFFF
-   effect: none
-   command:  OPTION COMMAND ]
-   button_type: press
-- name: 8
-   off: FFFFFF
+   off: 000000
    on: FF0000
    effect: none
    command: I
    button_type: press
+- name: 8
+   # Launch Excel
+   off: 00B700
+   on: 000000
+   effect: none
+   command:  OPTION COMMAND ]
+   button_type: press
 - name: 9
-   off: FFFFFF
+   off: 000000
    on: FF0000
    effect: none
    command: O
    button_type: press
 - name: 10
-   off: FFFFFF
+   off: 000000
    on: FF0000
    effect: none
    command: P
    button_type: press
 - name: 11
-   off: BF5739
-   on: FFFFFF
-   effect: none
-   command: OPTION COMMAND MINUS
-   button_type: press
-- name: 12
-   off: FFFFFF
+   off: 000000
    on: FF0000
    effect: none
-   command: 
+   command: Q
+   button_type: press
+- name: 12
+   # Launch Word
+   off: 2C56B1
+   on: FFFFFF
+   effect: none
+   command: OPTION COMMAND EQUALS
    button_type: press
 - name: 13
-   off: FFFFFF
+   off: 000000
    on: FF0000
    effect: none
    command: H
    button_type: press
 - name: 14
-   off: FFFFFF
+   off: 000000
    on: FF0000
    effect: none
    command: J
    button_type: press
 - name: 15
-   off: 2C56B1
+   # not assigned
+   off: 000000
    on: FFFFFF
    effect: none
-   command: OPTION COMMAND EQUALS
+   command: a
    button_type: press

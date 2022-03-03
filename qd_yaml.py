@@ -25,7 +25,8 @@ class YAML():
             return False
         
     def is_comment(self, text):
-        if text in ['#']:
+        l = text.lstrip()
+        if "#" in l[0]:
             return True
 
     def is_scalar(self, text):
@@ -67,42 +68,31 @@ class YAML():
         level = 0 
         node = 0
         for line in file:
-            # count indentation level 
-            current_level = self.count_indentation(line)
-#             print(f"current_level: {current_level}, is_block: {YAML.is_block(line)}, node: {node}")
-            if current_level == level and YAML.is_block(line) and node > 0:
-#                 print (f"line: {line}, block_list: {block_list}")
-#                 print (f"about to append block_list, which is: {block_list}")
-                self.list.append(block_list)
-                block_list = []
-#                 print(f"list: {self.list}, block_list: {block_list}")
-                new_line = YAML.split_mapping(line)
-                block_list.append(new_line)
-#                 print(f"block_list: {block_list}")
-#                 self.list.append(block_list)
-#                 block_list = []
-                level = self.count_indentation(line)
+            # Check if comment line
+            if self.is_comment(line):
+                pass
             else:
-                # just the first node
-                if node == 0:
+                # count indentation level 
+                current_level = self.count_indentation(line)
+                if current_level == level and YAML.is_block(line) and node > 0:
+                    self.list.append(block_list)
+                    block_list = []
                     new_line = YAML.split_mapping(line)
                     block_list.append(new_line)
-                    node += 1
-#                     self.list.append(block_list)
-#                     print("node is 0")
+                    level = self.count_indentation(line)
                 else:
-                    if YAML.is_mapping(line):
-                        # split string at mapping and remove whitespace
+                    # just the first node
+                    if node == 0:
                         new_line = YAML.split_mapping(line)
                         block_list.append(new_line)
-#                         print(f"block_list: {block_list}")
-                    node += 1
-#                 self.list.append(block_list)
-                
- 
-#         self.list = block_list
+                        node += 1
+                    else:
+                        if YAML.is_mapping(line):
+                            # split string at mapping and remove whitespace
+                            new_line = YAML.split_mapping(line)
+                            block_list.append(new_line)
+                        node += 1
         self.list.append(block_list)
-#         print(f"self_list: {self.list}")
         return self.list
 
     def pretty_print(self):

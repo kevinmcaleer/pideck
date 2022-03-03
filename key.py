@@ -3,26 +3,21 @@ from time import sleep
 
 def convert_hex_to_rgb(value):
     """ Converts a hex value to RGB values """
+    
     value = value.lstrip('#')
     lv = len(value)
-#     print(f"value: {value}, length: {lv}")
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
+
 def convert_rgb_to_hex(r:int,g:int,b:int):
-#     return "{:02x}{:02x}{:02x}".format(r,g,b)
-
-
-    hex = "{:02x}{:02x}{:02x}".format(r,g,b).upper()
-    return hex
-
-#     print(f"r:{r}, g:{g}, b:{b}")
-#     data_str = bytearray([int(r),int(g),int(b)])
-#     hex_str = ''.join([chr(b) for b in data_str])
-#     print(f"# {hex_str}")
-#     return hex_str
+    """ Converts RGB values into a Hex string """
     
+    hex = "{:02x}{:02x}{:02x}".format(r,g,b).upper()
+    return hex    
+
 
 class Key():
+    """ Models a single Key on the keypad """
     _off = ""
     _on = ""
     _effect = "" # pulse 
@@ -37,59 +32,74 @@ class Key():
     
     @property
     def command(self):
+        """ Gets the current keystrokes to be sent on keypress """
         return self._command
     
     @command.setter
     def command(self, value):
+        """ Sets the current keystrokes to be sent on keypress """
         self._command = value
         
     @property
     def on(self):
+        """ Gets the current colour value for the button when its pressed """
         return self._on
     
     @on.setter
     def on(self, value):
+        """ Sets the current colour value for the button when its pressed """
         self._on = value
         
     @property
     def off(self):
+        """ Gets the current colour value for the button when its not pressed """
         return self._off
     
     @off.setter
     def off(self, value):
+        """ Sets the current colour value for the button when its not pressed """
         self._off = value
         
     @property
     def effect(self):
+        """ Gets the button effect (pulse) """
         return self._effect
     
     @effect.setter
     def effect(self, value):
-        self._effect = value
+        """ Sets the button effect (pulse, flash, none) """
+        if value in ["pulse","flash","none"]:
+            self._effect = value
+        else:
+            print(f"{value} is not a valid effect type")
 
     @property
     def button_type(self):
+        """ Gets the button type (toggle or press) """
         return self._button_type
     
     @button_type.setter
-    def button_type(self, value):
+    def button_type(self, value:str):
+        """ Sets the button type (toggle or press) """
         if value in ["press","toggle"]:
             self._button_type = value
         else:
             print("not a valid button_type")
     
     @property
-    def toggle(self):
+    def toggle(self)->bool:
+        """ Gets the current toggle state (True or False) """
         return self._toggle
     
     @toggle.setter
-    def toggle(self, value):
+    def toggle(self, value:bool):
+        """ Toggles the button on or off """
         if self._toggle:
             self._toggle = False
         else:
             self._toggle = True
     
-    def fade_colour(self, percent):
+    def fade_colour(self, percent:float):
         '''assumes color is rgb between (0, 0, 0) and (255, 255, 255)'''
 
 #         print (f"on: {self._on}, off: {self.off}, percent: {percent}")
@@ -109,6 +119,7 @@ class Key():
     
     
     def pulse_tick(self):
+        """ cycles the pulse animation through one step """
         if self._pulse_up:
             if self._pulse_count < 10:
                 self._pulse_count += 1
@@ -121,25 +132,37 @@ class Key():
                 self._pulse_up = True
 #         print(f"pulse_count: {self._pulse_count}")
         return self.fade_colour(self._pulse_count/10)
+    
+    def flash_tick(self):
+        if self._pulse_count < 10:
+            self._pulse_count += 1
+           
+        else:
+            self._pulse_count = 0
+            if self._pulse_up:
+                self._pulse_up = False
+            else:
+                self._pulse_up = True
+        
+        if self._pulse_up:
+            return self._on
+        else:
+            return self._off
         
     def send(self, keyb):
+        """ Sends the current command to the attached computer """
         # split the string into separate strings
         self._command.replace("+","")
         keys = self._command.split()
 
         for command in keys:
-#             print(f"command: {command}, length: {len(keys)}")
             if command in ["CTRL", "CONTROL"]:
-#                 print("press control")
                 keyb.press(Keycode.CONTROL)
             elif command in ["SHIFT"]:
-#                 print("press shift")
                 keyb.press(Keycode.SHIFT)
             elif command in ["OPTION", "ALT"]:
-#                 print("press option")
                 keyb.press(Keycode.OPTION)
             elif command in ["COMMAND"]:
-#                 print("press command")
                 keyb.press(Keycode.COMMAND)
             elif command in ["a","A"]:
                 keyb.press(Keycode.A)
@@ -225,7 +248,6 @@ class Key():
                 keyb.press(Keycode.KEYPAD_PLUS)
             elif command in ["EQUALS"]:
                 keyb.press(Keycode.EQUALS)
-#                     
-#         sleep(0.10)
+
         keyb.release_all()
-#             keyb.send(Keycode.ENTER)
+
