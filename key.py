@@ -152,113 +152,229 @@ class Key():
     def send(self, keyb):
         """ Sends the current command to the attached computer """
         # split the string into separate strings
-        self._command.replace("+","")
-        keys = self._command.split()
+        keys = self._command.upper().replace("+"," ").split()
 
         for command in keys:
             if command in ["CTRL", "CONTROL"]:
                 keyb.press(Keycode.CONTROL)
-            elif command in ["SHIFT"]:
+            elif command == "SHIFT":
                 keyb.press(Keycode.SHIFT)
-            elif command in ["OPTION", "ALT"]:
+            elif command in ["OPT", "OPTION", "ALT"]:
                 keyb.press(Keycode.OPTION)
-            elif command in ["COMMAND"]:
+            elif command in ["CMD", "COMMAND"]:
                 keyb.press(Keycode.COMMAND)
-            elif command in ["a","A"]:
+            elif command == "A":
                 keyb.press(Keycode.A)
-            elif command in ["b","B"]:
+                keyb.release_all()
+            elif command == "B":
                 keyb.press(Keycode.B)
-            elif command in ["c","C"]:
+                keyb.release_all()
+            elif command == "C":
                 keyb.press(Keycode.C)
-            elif command in ["d","D"]:
+                keyb.release_all()
+            elif command == "D":
                 keyb.press(Keycode.D)
-            elif command in ["e","E"]:
+                keyb.release_all()
+            elif command == "E":
                 keyb.press(Keycode.E)
-            elif command in ["f","F"]:
+                keyb.release_all()
+            elif command == "F":
                 keyb.press(Keycode.F)
-            elif command in ["g","G"]:
+                keyb.release_all()
+            elif command == "G":
                 keyb.press(Keycode.G)
-            elif command in ["h","H"]:
+                keyb.release_all()
+            elif command == "H":
                 keyb.press(Keycode.H)
-            elif command in ["i","I"]:
+                keyb.release_all()
+            elif command == "I":
                 keyb.press(Keycode.I)
-            elif command in ["j","J"]:
+                keyb.release_all()
+            elif command == "J":
                 keyb.press(Keycode.J)
-            elif command in ["k","K"]:
+                keyb.release_all()
+            elif command == "K":
                 keyb.press(Keycode.K)
-            elif command in ["l","L"]:
+                keyb.release_all()
+            elif command == "L":
                 keyb.press(Keycode.L)
-            elif command in ["m","M"]:
+                keyb.release_all()
+            elif command == "M":
                 keyb.press(Keycode.M)
-            elif command in ["n","N"]:
+                keyb.release_all()
+            elif command == "N":
                 keyb.press(Keycode.N)
-            elif command in ["o","O"]:
+                keyb.release_all()
+            elif command == "O":
                 keyb.press(Keycode.O)
-            elif command in ["p","P"]:
+                keyb.release_all()
+            elif command == "P":
                 keyb.press(Keycode.P)
-            elif command in ["q","Q"]:
+                keyb.release_all()
+            elif command == "Q":
                 keyb.press(Keycode.Q)
-            elif command in ["r","R"]:
+                keyb.release_all()
+            elif command == "R":
                 keyb.press(Keycode.R)
-            elif command in ["s","S"]:
+                keyb.release_all()
+            elif command == "S":
                 keyb.press(Keycode.S)
-            elif command in ["t","T"]:
+                keyb.release_all()
+            elif command == "T":
                 keyb.press(Keycode.T)
-            elif command in ["u","U"]:
+                keyb.release_all()
+            elif command == "U":
                 keyb.press(Keycode.U)
-            elif command in ["v","V"]:
+                keyb.release_all()
+            elif command == "V":
                 keyb.press(Keycode.V)
-            elif command in ["w","w"]:
+                keyb.release_all()
+            elif command == "W":
                 keyb.press(Keycode.W)
-            elif command in ["x","X"]:
+                keyb.release_all()
+            elif command == "X":
                 keyb.press(Keycode.X)
-            elif command in ["y","Y"]:
+                keyb.release_all()
+            elif command == "Y":
                 keyb.press(Keycode.Y)
-            elif command in ["z","Z"]:
+                keyb.release_all()
+            elif command == "Z":
                 keyb.press(Keycode.Z)
-            elif command in ["1"]:
-                keyb.press(Keycode.KEYPAD_ONE)
-            elif command in ["2"]:
-                keyb.press(Keycode.KEYPAD_TWO)
-            elif command in ["3"]:
-                keyb.press(Keycode.KEYPAD_THREE)
-            elif command in ["4"]:
-                keyb.press(Keycode.KEYPAD_FOUR)
-            elif command in ["5"]:
-                keyb.press(Keycode.KEYPAD_FIVE)
-            elif command in ["6"]:
-                keyb.press(Keycode.KEYPAD_SIX)
-            elif command in ["7"]:
-                keyb.press(Keycode.KEYPAD_SEVEN)
-            elif command in ["8"]:
-                keyb.press(Keycode.KEYPAD_EIGHT)
-            elif command in ["9"]:
-                keyb.press(Keycode.KEYPAD_NINE)
-            elif command in ["0"]:
-                keyb.press(Keycode.KEYPAD_ZERO)
+                keyb.release_all()
+            elif command == "1":
+                keyb.press(Keycode.ONE)
+                keyb.release_all()
+            elif command == "2":
+                keyb.press(Keycode.TWO)
+                keyb.release_all()
+            elif command == "3":
+                keyb.press(Keycode.THREE)
+                keyb.release_all()
+            elif command == "4":
+                keyb.press(Keycode.FOUR)
+                keyb.release_all()
+            elif command == "5":
+                keyb.press(Keycode.FIVE)
+                keyb.release_all()
+            elif command == "6":
+                keyb.press(Keycode.SIX)
+                keyb.release_all()
+            elif command == "7":
+                keyb.press(Keycode.SEVEN)
+                keyb.release_all()
+            elif command == "8":
+                keyb.press(Keycode.EIGHT)
+                keyb.release_all()
+            elif command == "9":
+                keyb.press(Keycode.NINE)
+                keyb.release_all()
+            elif command == "0":
+                keyb.press(Keycode.ZERO)
+                keyb.release_all()
             elif command in ["[","{"]:
                 keyb.press(Keycode.LEFT_BRACKET)
+                keyb.release_all()
             elif command in ["]","}"]:
                 keyb.press(Keycode.RIGHT_BRACKET)
-            elif command in ["TAB"]:
+                keyb.release_all()
+            elif command == "TAB":
                 keyb.press(Keycode.TAB)
-            elif command in ["MINUS"]:
+                keyb.release_all()
+            elif command == "MINUS":
                 keyb.press(Keycode.KEYPAD_MINUS)
-            elif command in ["PLUS"]:
+                keyb.release_all()
+            elif command == "PLUS":
                 keyb.press(Keycode.KEYPAD_PLUS)
-            elif command in ["EQUALS"]:
+                keyb.release_all()
+            elif command == "EQUALS":
                 keyb.press(Keycode.EQUALS)
-            elif command in ["ECSCAPE"]:
+                keyb.release_all()
+            elif command in ["ESC", "ECSCAPE"]:
                 keyb.press(Keycode.ESCAPE)
-            elif command in ["SPACE"]:
+                keyb.release_all()
+            elif command == "SPACE":
                 keyb.press(Keycode.SPACE)
-            elif command in ["LEFT_ARROW"]:
+                keyb.release_all()
+            elif command in [".", "PERIOD"]:
+                keyb.press(Keycode.PERIOD)
+                keyb.release_all()
+            elif command in [",", "COMMA"]:
+                keyb.press(Keycode.COMMA)
+                keyb.release_all()
+            elif command in [";", "SEMICOLON"]:
+                keyb.press(Keycode.SEMICOLON)
+                keyb.release_all()
+            elif command == "COLON":
+                keyb.press(Keycode.SHIFT)
+                keyb.press(Keycode.SEMICOLON)
+                keyb.release_all()
+            elif command in ["\\", "BACKSLASH"]:
+                keyb.press(Keycode.BACKSLASH)
+                keyb.release_all()
+            elif command in ["/", "FORWARD_SLASH"]:
+                keyb.press(Keycode.FORWARD_SLASH)
+                keyb.release_all()
+            elif command in ["LEFT", "LEFT_ARROW"]:
                 keyb.press(Keycode.LEFT_ARROW)
-            elif command in ["RIGHT_ARROW"]:
+                keyb.release_all()
+            elif command in ["RIGHT", "RIGHT_ARROW"]:
                 keyb.press(Keycode.RIGHT_ARROW)
-            elif command in ["UP_ARROW"]:
+                keyb.release_all()
+            elif command in ["UP", "UP_ARROW"]:
                 keyb.press(Keycode.UP_ARROW)
-            elif command in ["DOWN_ARROW"]:
+                keyb.release_all()
+            elif command in ["DOWN", "DOWN_ARROW"]:
                 keyb.press(Keycode.DOWN_ARROW)
+                keyb.release_all()
+            elif command == "F1":
+                keyb.press(Keycode.F1)
+                keyb.release_all()
+            elif command == "F2":
+                keyb.press(Keycode.F2)
+                keyb.release_all()
+            elif command == "F3":
+                keyb.press(Keycode.F3)
+                keyb.release_all()
+            elif command == "F4":
+                keyb.press(Keycode.F4)
+                keyb.release_all()
+            elif command == "F5":
+                keyb.press(Keycode.F5)
+                keyb.release_all()
+            elif command == "F6":
+                keyb.press(Keycode.F6)
+                keyb.release_all()
+            elif command == "F7":
+                keyb.press(Keycode.F7)
+                keyb.release_all()
+            elif command == "F8":
+                keyb.press(Keycode.F8)
+                keyb.release_all()
+            elif command == "F9":
+                keyb.press(Keycode.F9)
+                keyb.release_all()
+            elif command == "F10":
+                keyb.press(Keycode.F10)
+                keyb.release_all()
+            elif command == "F11":
+                keyb.press(Keycode.F11)
+                keyb.release_all()
+            elif command == "F12":
+                keyb.press(Keycode.F12)
+                keyb.release_all()
+            elif command in ["RETURN", "ENTER"]:
+                keyb.press(Keycode.ENTER)
+                keyb.release_all()
+            elif command == "THUMBS-UP":
+                keyb.press(Keycode.SHIFT)
+                keyb.press(Keycode.SEMICOLON)
+                keyb.release_all()
+                keyb.press(Keycode.KEYPAD_PLUS)
+                keyb.release_all()
+                keyb.press(Keycode.ONE)
+                keyb.release_all()
+                keyb.press(Keycode.SHIFT)
+                keyb.press(Keycode.SEMICOLON)
+                keyb.release_all()
         keyb.release_all()
 
