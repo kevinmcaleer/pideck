@@ -88,16 +88,13 @@ class Key():
     
     @property
     def toggle(self)->bool:
-        """ Gets the current toggle state (True or False) """
-        return self._toggle
-    
-    @toggle.setter
-    def toggle(self, value:bool):
-        """ Toggles the button on or off """
+        """ Gets the current toggle state (True or False) and flips the state """
         if self._toggle:
             self._toggle = False
+            return True
         else:
             self._toggle = True
+            return False
     
     def fade_colour(self, percent:float):
         '''assumes color is rgb between (0, 0, 0) and (255, 255, 255)'''
