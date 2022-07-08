@@ -134,14 +134,13 @@ while True:
             if keys[key_no].effect == "pulse":
                 color = keys[key_no].pulse_tick()
                 pixels[key_no] = convert_hex_to_rgb(color)
+
             if keys[key_no].button_type == "toggle":
-                keys[key_no].toggle
-                
                 if keys[key_no].toggle:
-                    pixels[key_no] = convert_hex_to_rgb(keys[key_no].on)
-                else:
                     pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
-            else:            
+                else:
+                    pixels[key_no] = convert_hex_to_rgb(keys[key_no].on)
+            else:
                 pixels[key_no] = convert_hex_to_rgb(keys[key_no].on)
             
             # send the command
@@ -151,11 +150,9 @@ while True:
             if not held[key_no]:
                 held[key_no] = True
         else:
-            # Need to tidy up the condition below
             if keys[key_no].effect == "none":
-                pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
-            if not keys[key_no].button_type in ["press","toggle"]:
-                pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
+                if keys[key_no].button_type == "press":
+                    pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
         
         # Pulse effect if switched on
         if keys[key_no].effect == "pulse":
@@ -168,6 +165,6 @@ while True:
             pixels[key_no] = convert_hex_to_rgb(color)
          
     # Released state
-    time.sleep(0.05) # Debounce
+    time.sleep(0.20) # Debounce
     for i in range(16):
         held[i] = False  # Set held states to off
