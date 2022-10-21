@@ -31,7 +31,7 @@ from digitalio import DigitalInOut, Direction, Pull
 import qd_yaml
 from key import Key, convert_hex_to_rgb, convert_rgb_to_hex
 
-VERSION = 1.0
+VERSION = 1.1
 
 cs = DigitalInOut(board.GP17)
 cs.direction = Direction.OUTPUT
@@ -96,7 +96,6 @@ def set_keycolours(config):
 
 def key_on(config, key):
     pixels[int(key["name"])] = convert_hex_to_rgb(key["on"])
-
     
 # load the config and set the key colours
 config = load_configuration()
@@ -116,7 +115,9 @@ for index in range(item_len):
     myKey.on = key['on']
     myKey.off = key['off']
     myKey.effect = key['effect']
+    myKey.pulse_timing = key.get('pulse_timing')
     myKey.button_type = key['button_type']
+    myKey.repeatable = key.get('repeatable', 'false')
     keys.insert(index, myKey)
 # print(f"keys: {keys}")
 
@@ -126,18 +127,19 @@ while True:
     # check the button press state
     pressed = read_button_states(0, 16)
     
-
     for key_no in range(16):
 
-        if pressed[key_no]:
-
-            if keys[key_no].effect == "pulse":
-                color = keys[key_no].pulse_tick()
-                pixels[key_no] = convert_hex_to_rgb(color)
+        do_effect = True
+        if keys[key_no].button_type == "toggle":
+            do_effect = keys[key_no].toggle_value
+        
+        if pressed[key_no] and not held[key_no]:
+            # print(f"keys[{key_no}]: {keys[key_no].name} {keys[key_no].button_type} keys[key_no].repeatable {keys[key_no].repeatable}")
 
             if keys[key_no].button_type == "toggle":
                 if keys[key_no].toggle:
                     pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
+                    do_effect = False
                 else:
                     pixels[key_no] = convert_hex_to_rgb(keys[key_no].on)
             else:
@@ -145,26 +147,28 @@ while True:
             
             # send the command
             keys[key_no].send(kbd)
-            print(f"key sent {keys[key_no].command}")
+            # print(f"key sent {keys[key_no].command}")
 
-            if not held[key_no]:
-                held[key_no] = True
+            held[key_no] = True
         else:
             if keys[key_no].effect == "none":
                 if keys[key_no].button_type == "press":
                     pixels[key_no] = convert_hex_to_rgb(keys[key_no].off)
-        
+
         # Pulse effect if switched on
-        if keys[key_no].effect == "pulse":
+        if keys[key_no].effect == "pulse" and do_effect and not pressed[key_no]:
             color = keys[key_no].pulse_tick()
             pixels[key_no] = convert_hex_to_rgb(color)
             
         # Flash effect if switched on
-        if keys[key_no].effect == "flash":
+        if keys[key_no].effect == "flash" and do_effect and not pressed[key_no]:
             color = keys[key_no].flash_tick()
             pixels[key_no] = convert_hex_to_rgb(color)
          
     # Released state
-    time.sleep(0.20) # Debounce
-    for i in range(16):
-        held[i] = False  # Set held states to off
+    time.sleep(0.15) # Debounce
+    # check the button press states again
+    pressed = read_button_states(0, 16)
+    for key_no in range(16): 
+        if not pressed[key_no] or keys[key_no].repeatable:
+            held[key_no] = False  # Set held states to off

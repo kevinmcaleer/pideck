@@ -25,6 +25,7 @@
    off: 000000
    on: FF0000
    effect: flash
+   pulse_timing: 1
    command: COMMAND SHIFT K
    button_type: press
 - name: 4
@@ -45,7 +46,7 @@
    off: 000000
    on: FF0000
    effect: none
-   command: Y
+   command: EMPTY
    button_type: press
 - name: 7
    # Right Arrow
@@ -54,13 +55,15 @@
    effect: pulse
    command: RIGHT_ARROW
    button_type: press
+   repeatable: true
 - name: 8
-   # Launch Word
-   off: 000055
-   on: 0000FF
-   effect: pulse
-   command: OPTION COMMAND EQUALS
-   button_type: press
+   # Example toggle with flashing
+   off: 0000FF
+   on: FF0000
+   effect: flash
+   pulse_timing: 1
+   command: EMPTY
+   button_type: toggle
 - name: 9
    off: 000000
    on: FF0000
@@ -74,6 +77,7 @@
    effect: none
    command: UP_ARROW
    button_type: press
+   repeatable: true
 - name: 11
    # Down Arrow
    off: FFFF00
@@ -81,6 +85,7 @@
    effect: none
    command: DOWN_ARROW
    button_type: press
+   repeatable: true
 - name: 12
    # Launch Excel
    off: 005500
@@ -109,3 +114,4 @@
    effect: none
    command: LEFT_ARROW
    button_type: press
+   repeatable: true
