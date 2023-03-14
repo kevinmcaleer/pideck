@@ -1,6 +1,10 @@
 # Welcome to PiDeck
 Turn your Pimoroni Pico RBG Keypad into a USB Shortcut Keypad that is configurable via a simple Yaml file.
 
+Read the full article here: <https://www.kevsrobots.com/blog/picodeck.html>
+
+---
+
 # Installation & Prerequisites
 To get up and running quickly, 
 1. Flash your Pico with the latest version of [Circuit Python](https://circuitpython.org/board/raspberry_pi_pico/), from Adafruit
