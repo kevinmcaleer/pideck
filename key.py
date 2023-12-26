@@ -1,6 +1,8 @@
 from adafruit_hid.keycode import Keycode
 from time import sleep
 
+pulse_timing = 10 # Default timing.
+
 def convert_hex_to_rgb(value):
     """ Converts a hex value to RGB values """
     
@@ -15,7 +17,6 @@ def convert_rgb_to_hex(r:int,g:int,b:int):
     hex = "{:02x}{:02x}{:02x}".format(r,g,b).upper()
     return hex    
 
-
 class Key():
     """ Models a single Key on the keypad """
     _off = ""
@@ -23,9 +24,11 @@ class Key():
     _effect = "" # pulse 
     _command = ""
     _button_type = "" # press, toggle
-    _pulse_count = 10
+    _pulse_count = pulse_timing  # initialize to the pulse timing
+    _pulse_timing = pulse_timing
     _pulse_up = False
     _toggle = False
+    _repeatable = False
     
     def __init__(self):
         self._type = "press"
@@ -74,6 +77,18 @@ class Key():
             print(f"{value} is not a valid effect type")
 
     @property
+    def pulse_timing(self):
+        """ Gets the button color change timing """
+        return self._pulse_timing
+    
+    @pulse_timing.setter
+    def pulse_timing(self, value):
+        """ Sets the button color change timing """
+        if value is not None and value.isdigit() and int(value) > 0:
+            self._pulse_timing = int(value)
+            self._pulse_count = self._pulse_timing
+
+    @property
     def button_type(self):
         """ Gets the button type (toggle or press) """
         return self._button_type
@@ -85,7 +100,18 @@ class Key():
             self._button_type = value
         else:
             print("not a valid button_type")
+
+    @property
+    def repeatable(self):
+        """ Gets the setting if the command can be repeated on the same press """
+        return self._repeatable
     
+    @repeatable.setter
+    def repeatable(self, value:bool):
+        """ Sets if the command can be repeated on the same press """
+        if value.lower() == "true":
+            self._repeatable = True
+            
     @property
     def toggle(self)->bool:
         """ Gets the current toggle state (True or False) and flips the state """
@@ -96,6 +122,11 @@ class Key():
             self._toggle = True
             return False
     
+    @property
+    def toggle_value(self):
+        """ Gets the current toggle state """
+        return self._toggle
+
     def fade_colour(self, percent:float):
         '''assumes color is rgb between (0, 0, 0) and (255, 255, 255)'''
 
@@ -118,7 +149,7 @@ class Key():
     def pulse_tick(self):
         """ cycles the pulse animation through one step """
         if self._pulse_up:
-            if self._pulse_count < 10:
+            if self._pulse_count < self._pulse_timing:
                 self._pulse_count += 1
             else:
                 self._pulse_up = False
@@ -128,10 +159,10 @@ class Key():
             else:
                 self._pulse_up = True
 #         print(f"pulse_count: {self._pulse_count}")
-        return self.fade_colour(self._pulse_count/10)
+        return self.fade_colour(self._pulse_count/self._pulse_timing)
     
     def flash_tick(self):
-        if self._pulse_count < 10:
+        if self._pulse_count < self._pulse_timing:
             self._pulse_count += 1
            
         else:
@@ -160,6 +191,9 @@ class Key():
                 keyb.press(Keycode.OPTION)
             elif command in ["CMD", "COMMAND"]:
                 keyb.press(Keycode.COMMAND)
+            elif command == "PRINT_SCREEN":
+                keyb.press(Keycode.PRINT_SCREEN)
+                keyb.release_all()
             elif command == "A":
                 keyb.press(Keycode.A)
                 keyb.release_all()

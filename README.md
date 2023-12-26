@@ -20,6 +20,9 @@ You can configure the PiDeck using the `keypad.yml` file. It has 16 sections, on
 - If the `effect` is set to `pulse` the key will pulse between the off and on values.
 - The `command` is the sequence of keys (or shortcut) that will be sent to the computer. On a Mac, you can use the Automator to specify a `service` and then Application to launch, then in the Keyboard panel with Settings you can specify the shortcut key combination to launch that app. Pair that with the key combination in the `command` and you have yourself a productivity Swiss Army knife.
 - Finally `button_type` lets you choose whether the key is a single `press` momentry touch button, or if it is a `toggle` button where it stays on until you press it again.
+- Optional: the `pulse_timing` will determine how many ticks of the program the `effect` will span.  This must be a positive integer greater than 0.
+- Optional: the `repeatable` boolean will allow a button to be pressed and the command to be sent each tick of the program.  Anyone order spam?
+
 
 ``` yaml
 - name: 0
@@ -32,6 +35,8 @@ You can configure the PiDeck using the `keypad.yml` file. It has 16 sections, on
    off: FFFF00
    on: 00FF00
    effect: pulse
+   pulse_timing: 1
    command: COMMAND TAB
    button_type: toggle
+   repeatable: true
 ```
